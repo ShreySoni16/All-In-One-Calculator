@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All in one Calculator</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .scientific-calculator {
+            background-color: #333;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        #display {
+            width: 100%;
+            height: 50px;
+            margin-bottom: 10px;
+            text-align: right;
+            font-size: 24px;
+            padding: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #666;
+            color: white;
+        }
+        .operator {
+            background-color: #ff9800;
+        }
+        .scientific {
+            background-color: #2196f3;
+        }
+        .memory {
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+    <header>
+        <h1>All in One Calculator</h1>
+        <h2>Your one-step calculation hub</h2>
+    </header>
+  
+    <!-- Scientific Calculator -->
+    <h1>Scientific Calculator</h1>
+    <div class="scientific-calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button class="scientific" onclick="scientificCalculate('sin')">sin</button>
+            <button class="scientific" onclick="scientificCalculate('cos')">cos</button>
+            <button class="scientific" onclick="scientificCalculate('tan')">tan</button>
+            <button class="scientific" onclick="scientificCalculate('cot')">cot</button>
+            
+            <button class="scientific" onclick="scientificCalculate('sqrt')">√</button>
+            <button class="scientific" onclick="scientificCalculate('log')">log</button>
+            <button class="scientific" onclick="scientificCalculate('ln')">ln</button>
+            <button class="scientific" onclick="scientificCalculate('^')">^</button>
+            
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('*')">*</button>
+            
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button onclick="calculate('=')">=</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            
+            <button onclick="clearDisplay()">C</button>
+            <button class="memory" onclick="memoryClear()">MC</button>
+            <button class="memory" onclick="memoryRecall()">MR</button>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Financial Calculators</h1>
+
+        <div class="calculator-grid">
+            <!-- Simple Interest Calculator -->
+            <div class="card">
+                <h3>Simple Interest Calculator</h3>
+                <div>
+                    <label for="principal">Principal Amount:</label>
+                    <input type="number" id="principal">
+                </div>
+                <div>
+                    <label for="rate">Interest Rate (%):</label>
+                    <input type="number" id="rate">
+                </div>
+                <div>
+                    <label for="time">Time Period (years):</label>
+                    <input type="number" id="time">
+                </div>
+                <button onclick="calculateSimpleInterest()">Calculate</button>
+                <div id="result"></div>
+            </div>
+
+            <!-- Compound Interest Calculator -->
+            <div class="card">
+                <h3>Compound Interest Calculator</h3>
+                <div>
+                    <label for="compound-principal">Principal Amount:</label>
+                    <input type="number" id="compound-principal">
+                </div>
+                <div>
+                    <label for="compound-rate">Interest Rate (%):</label>
+                    <input type="number" id="compound-rate">
+                </div>
+                <div>
+                    <label for="frequency">Compounding Frequency:</label>
+                    <input type="number" id="frequency">
+                </div>
+                <div>
+                    <label for="compound-time">Time Period (years):</label>
+                    <input type="number" id="compound-time">
+                </div>
+                <button onclick="calculateCompoundInterest()">Calculate</button>
+                <div id="compound-result"></div>
+            </div>
+
+            <!-- Currency Calculator -->
+            <div class="card">
+                <h3>Currency Calculator</h3>
+                <div>
+                    <label for="currency-amount">Amount:</label>
+                    <input type="number" id="currency-amount">
+                </div>
+                <div>
+                    <label for="source-currency">Source Currency:</label>
+                    <input type="text" id="source-currency">
+                </div>
+                <div>
+                    <label for="target-currency">Target Currency:</label>
+                    <input type="text" id="target-currency">
+                </div>
+                <button onclick="convertCurrency()">Convert</button>
+                <div id="currency-result"></div>
+            </div>
+
+            <!-- Salary Calculator -->
+            <div class="card">
+                <h3>Salary Calculator</h3>
+                <div>
+                    <label for="gross-salary">Gross Salary:</label>
+                    <input type="number" id="gross-salary">
+                </div>
+                <div>
+                    <label for="deductions">Deductions:</label>
+                    <input type="number" id="deductions">
+                </div>
+                <div>
+                    <label for="bonuses">Bonuses:</label>
+                    <input type="number" id="bonuses">
+                </div>
+                <button onclick="calculateNetSalary()">Calculate</button>
+                <div id="salary-result"></div>
+            </div>
+
+            <!-- Retirement Calculator -->
+            <div class="card">
+                <h3>Retirement Calculator</h3>
+                <div>
+                    <label for="current-age">Current Age:</label>
+                    <input type="number" id="current-age">
+                </div>
+                <div>
+                    <label for="retirement-age">Retirement Age:</label>
+                    <input type="number" id="retirement-age">
+                </div>
+                <div>
+                    <label for="savings">Savings:</label>
+                    <input type="number" id="savings">
+                </div>
+                <div>
+                    <label for="return-rate">Expected Return Rate (%):</label>
+                    <input type="number" id="return-rate">
+                </div>
+                <button onclick="calculateRetirement()">Calculate</button>
+                <div id="retirement-result"></div>
+            </div>
+
+            <!-- Sales and Tax Calculator -->
+            <div class="card">
+                <h3>Sales and Tax Calculator</h3>
+                <div>
+                    <label for="price">Price:</label>
+                    <input type="number" id="price">
+                </div>
+                <div>
+                    <label for="tax-rate">Tax Rate (%):</label>
+                    <input type="number" id="tax-rate">
+                </div>
+                <button onclick="calculateSalesTax()">Calculate</button>
+                <div id="sales-result"></div>
+            </div>
+
+            <!-- Investment Calculator -->
+            <div class="card">
+                <h3>Investment Calculator</h3>
+                <div>
+                    <label for="initial-investment">Initial Investment:</label>
+                    <input type="number" id="initial-investment">
+                </div>
+                <div>
+                    <label for="periodic-contributions">Periodic Contributions:</label>
+                    <input type="number" id="periodic-contributions">
+                </div>
+                <div>
+                    <label for="investment-rate">Expected Return Rate (%):</label>
+                    <input type="number" id="investment-rate">
+                </div>
+                <div>
+                    <label for="investment-time">Time Period (years):</label>
+                    <input type="number" id="investment-time">
+                </div>
+                <button onclick="calculateInvestment()">Calculate</button>
+                <div id="investment-result"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Health and Fitness Calculators</h1>
+
+        <div class="calculator-grid">
+
+            <!-- BMI Calculator -->
+            <div class="card">
+                <h3>BMI Calculator</h3>
+                <div>
+                    <label for="height">Height (cm):</label>
+                    <input type="number" id="height">
+                </div>
+                <div>
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight">
+                </div>
+                <button onclick="calculateBMI()">Calculate</button>
+                <div id="bmi-result"></div>
+            </div>
+
+            <!-- BMR Calculator -->
+            <div class="card">
+                <h3>BMR Calculator</h3>
+                <div>
+                    <label for="gender">Gender:</label>
+                    <select id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" id="age">
+                </div>
+                <div>
+                    <label for="weight-bmr">Weight (kg):</label>
+                    <input type="number" id="weight-bmr">
+                </div>
+                <div>
+                    <label for="height-bmr">Height (cm):</label>
+                    <input type="number" id="height-bmr">
+                </div>
+                <button onclick="calculateBMR()">Calculate</button>
+                <div id="bmr-result"></div>
+            </div>
+
+            <!-- Calorie Calculator -->
+            <div class="card">
+                <h3>Calorie Calculator</h3>
+                <div>
+                    <label for="activity-level">Activity Level:</label>
+                    <select id="activity-level">
+                        <option value="sedentary">Sedentary</option>
+                        <option value="light">Light</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="active">Active</option>
+                        <option value="very-active">Very Active</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="age-cal">Age:</label>
+                    <input type="number" id="age-cal">
+                </div>
+                <div>
+                    <label for="gender-cal">Gender:</label>
+                    <select id="gender-cal">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="weight-cal">Weight (kg):</label>
+                    <input type="number" id="weight-cal">
+                </div>
+                <div>
+                    <label for="height-cal">Height (cm):</label>
+                    <input type="number" id="height-cal">
+                </div>
+                <button onclick="calculateCalories()">Calculate</button>
+                <div id="calorie-result"></div>
+            </div>
+
+            <!-- Body Fat Calculator -->
+            <div class="card">
+                <h3>Body Fat Calculator</h3>
+                <div>
+                    <label for="gender-bodyfat">Gender:</label>
+                    <select id="gender-bodyfat">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="age-bodyfat">Age:</label>
+                    <input type="number" id="age-bodyfat">
+                </div>
+                <div>
+                    <label for="waist-bodyfat">Waist (cm):</label>
+                    <input type="number" id="waist-bodyfat">
+                </div>
+                <div>
+                    <label for="neck-bodyfat">Neck (cm):</label>
+                    <input type="number" id="neck-bodyfat">
+                </div>
+                <button onclick="calculateBodyFat()">Calculate</button>
+                <div id="bodyfat-result"></div>
+            </div>
+
+            <!-- Ideal Weight Calculator -->
+            <div class="card">
+                <h3>Ideal Weight Calculator</h3>
+                <div>
+                    <label for="gender-ideal">Gender:</label>
+                    <select id="gender-ideal">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="height-ideal">Height (cm):</label>
+                    <input type="number" id="height-ideal">
+                </div>
+                <div>
+                    <label for="age-ideal">Age:</label>
+                    <input type="number" id="age-ideal">
+                </div>
+                <div>
+                    <label for="frame-size">Frame Size:</label>
+                    <select id="frame-size">
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+                <button onclick="calculateIdealWeight()">Calculate</button>
+                <div id="idealweight-result"></div>
+            </div>
+
+        </div>
+        <div class="container">
+            <h1>Conversion Calculators</h1>
+
+            <div class="calculator-grid">
+
+                <!-- Length Calculator -->
+                <div class="card">
+                    <h3>Length Calculator</h3>
+                    <div>
+                        <label for="length">Length:</label>
+                        <input type="number" id="length">
+                    </div>
+                    <div>
+                        <label for="length-unit">Unit:</label>
+                        <select id="length-unit">
+                            <option value="meters">Meters</option>
+                            <option value="kilometers">Kilometers</option>
+                            <option value="feet">Feet</option>
+                            <option value="miles">Miles</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="target-length-unit">Convert to:</label>
+                        <select id="target-length-unit">
+                            <option value="meters">Meters</option>
+                            <option value="kilometers">Kilometers</option>
+                            <option value="feet">Feet</option>
+                            <option value="miles">Miles</option>
+                        </select>
+                    </div>
+                    <button onclick="convertLength()">Convert</button>
+                    <div id="length-result"></div>
+                </div>
+
+                <!-- Age Calculator -->
+                <div class="card">
+                    <h3>Age Calculator</h3>
+                    <div>
+                        <label for="birthdate">Birthdate:</label>
+                        <input type="date" id="birthdate">
+                    </div>
+                    <button onclick="calculateAge()">Calculate</button>
+                    <div id="age-result"></div>
+                </div>
+
+                <!-- Hour to Minute & Seconds Calculator -->
+                <div class="card">
+                    <h3>Hour to Minute & Seconds Calculator</h3>
+                    <div>
+                        <label for="hours">Hours:</label>
+                        <input type="number" id="hours">
+                    </div>
+                    <button onclick="convertHours()">Convert</button>
+                    <div id="hours-result"></div>
+                </div>
+
+                <!-- Date Calculator -->
+                <div class="card">
+                    <h3>Date Calculator</h3>
+                    <div>
+                        <label for="start-date">Start Date:</label>
+                        <input type="date" id="start-date">
+                    </div>
+                    <div>
+                        <label for="end-date">End Date:</label>
+                        <input type="date" id="end-date">
+                    </div>
+                    <button onclick="calculateDateDifference()">Calculate</button>
+                    <div id="date-result"></div>
+                </div>
+
+                <!-- GPA Calculator -->
+                <div class="card">
+                    <h3>GPA Calculator</h3>
+                    <div>
+                        <label for="course-credits">Course Credits:</label>
+                        <input type="number" id="course-credits">
+                    </div>
+                    <div>
+                        <label for="course-grades">Course Grades:</label>
+                        <input type="text" id="course-grades">
+                    </div>
+                    <button onclick="calculateGPA()">Calculate</button>
+                    <div id="gpa-result"></div>
+                </div>
+
+                <!-- Height Calculator -->
+                <div class="card">
+                    <h3>Height Calculator</h3>
+                    <div>
+                        <label for="height">Height:</label>
+                        <input type="number" id="height">
+                    </div>
+                    <div>
+                        <label for="height-unit">Unit:</label>
+                        <select id="height-unit">
+                            <option value="centimeters">Centimeters</option>
+                            <option value="meters">Meters</option>
+                            <option value="inches">Inches</option>
+                            <option value="feet">Feet</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="target-height-unit">Convert to:</label>
+                        <select id="target-height-unit">
+                            <option value="centimeters">Centimeters</option>
+                            <option value="meters">Meters</option>
+                            <option value="inches">Inches</option>
+                            <option value="feet">Feet</option>
+                        </select>
+                    </div>
+                    <button onclick="convertHeight()">Convert</button>
+                    <div id="height-result"></div>
+                </div>
+
+                <!-- Password Generator -->
+                <div class="card">
+                    <h3>Password Generator</h3>
+                    <div>
+                        <label for="password-length">Password Length:</label>
+                        <input type="number" id="password-length">
+                    </div>
+                    <div>
+                        <input type="checkbox" id="include-symbols">
+                        <label for="include-symbols">Include Symbols</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="include-numbers">
+                        <label for="include-numbers">Include Numbers</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="include-uppercase">
+                        <label for="include-uppercase">Include Uppercase Letters</label>
+                    </div>
+                    <button onclick="generatePassword()">Generate</button>
+                    <div id="password-result"></div>
+                </div>
+
+                <!-- Bill and Tip Calculator -->
+                <div class="card">
+                    <h3>Bill and Tip Calculator</h3>
+                    <div>
+                        <label for="bill-amount">Bill Amount:</label>
+                        <input type="number" id="bill-amount">
+                    </div>
+                    <div>
+                        <label for="tip-percentage">Tip Percentage:</label>
+                        <input type="number" id="tip-percentage">
+                    </div>
+                    <button onclick="calculateBillAndTip()">Calculate</button>
+                    <div id="bill-result"></div>
+                </div>
+            </div>
+            <div class="container">
+                <h1>Geometry Calculators</h1>
+
+                <div class="calculator-grid">
+
+                    <!-- 2D Distance Calculator -->
+                    <div class="card">
+                        <h3>2D Distance Calculator</h3>
+                        <div>
+                            <label for="x1">X1:</label>
+                            <input type="number" id="x1">
+                        </div>
+                        <div>
+                            <label for="y1">Y1:</label>
+                            <input type="number" id="y1">
+                        </div>
+                        <div>
+                            <label for="x2">X2:</label>
+                            <input type="number" id="x2">
+                        </div>
+                        <div>
+                            <label for="y2">Y2:</label>
+                            <input type="number" id="y2">
+                        </div>
+                        <button onclick="calculate2DDistance()">Calculate</button>
+                        <div id="2d-distance-result"></div>
+                    </div>
+
+                    <!-- 3D Distance Calculator -->
+                    <div class="card">
+                        <h3>3D Distance Calculator</h3>
+                        <div>
+                            <label for="x1-3d">X1:</label>
+                            <input type="number" id="x1-3d">
+                        </div>
+                        <div>
+                            <label for="y1-3d">Y1:</label>
+                            <input type="number" id="y1-3d">
+                        </div>
+                        <div>
+                            <label for="z1-3d">Z1:</label>
+                            <input type="number" id="z1-3d">
+                        </div>
+                        <div>
+                            <label for="x2-3d">X2:</label>
+                            <input type="number" id="x2-3d">
+                        </div>
+                        <div>
+                            <label for="y2-3d">Y2:</label>
+                            <input type="number" id="y2-3d">
+                        </div>
+                        <div>
+                            <label for="z2-3d">Z2:</label>
+                            <input type="number" id="z2-3d">
+                        </div>
+                        <button onclick="calculate3DDistance()">Calculate</button>
+                        <div id="3d-distance-result"></div>
+                    </div>
+
+                    <!-- Equilateral Triangle Calculator -->
+                    <div class="card">
+                        <h3>Equilateral Triangle Calculator</h3>
+                        <div>
+                            <label for="side-equilateral">Side Length:</label>
+                            <input type="number" id="side-equilateral">
+                        </div>
+                        <button onclick="calculateEquilateralTriangle()">Calculate</button>
+                        <div id="equilateral-triangle-result"></div>
+                    </div>
+
+                    <!-- Isosceles Triangle Calculator -->
+                    <div class="card">
+                        <h3>Isosceles Triangle Calculator</h3>
+                        <div>
+                            <label for="base-isosceles">Base Length:</label>
+                            <input type="number" id="base-isosceles">
+                        </div>
+                        <div>
+                            <label for="side-isosceles">Side Length:</label>
+                            <input type="number" id="side-isosceles">
+                        </div>
+                        <button onclick="calculateIsoscelesTriangle()">Calculate</button>
+                        <div id="isosceles-triangle-result"></div>
+                    </div>
+
+                    <!-- Right-Angled Triangle Calculator -->
+                    <div class="card">
+                        <h3>Right-Angled Triangle Calculator</h3>
+                        <div>
+                            <label for="base-right">Base:</label>
+                            <input type="number" id="base-right">
+                        </div>
+                        <div>
+                            <label for="height-right">Height:</label>
+                            <input type="number" id="height-right">
+                        </div>
+                        <button onclick="calculateRightAngledTriangle()">Calculate</button>
+                        <div id="right-angled-triangle-result"></div>
+                    </div>
+
+                    <!-- Cube Calculator -->
+                    <div class="card">
+                        <h3>Cube Calculator</h3>
+                        <div>
+                            <label for="side-cube">Side Length:</label>
+                            <input type="number" id="side-cube">
+                        </div>
+                        <button onclick="calculateCube()">Calculate</button>
+                        <div id="cube-result"></div>
+                    </div>
+
+                    <!-- Cone Calculator -->
+                    <div class="card">
+                        <h3>Cone Calculator</h3>
+                        <div>
+                            <label for="radius-cone">Radius:</label>
+                            <input type="number" id="radius-cone">
+                        </div>
+                        <div>
+                            <label for="height-cone">Height:</label>
+                            <input type="number" id="height-cone">
+                        </div>
+                        <button onclick="calculateCone()">Calculate</button>
+                        <div id="cone-result"></div>
+                    </div>
+
+                    <!-- Circle Calculator -->
+                    <div class="card">
+                        <h3>Circle Calculator</h3>
+                        <div>
+                            <label for="radius-circle">Radius:</label>
+                            <input type="number" id="radius-circle">
+                        </div>
+                        <button onclick="calculateCircle()">Calculate</button>
+                        <div id="circle-result"></div>
+                    </div>
+
+                    <!-- Cylinder Calculator -->
+                    <div class="card">
+                        <h3>Cylinder Calculator</h3>
+                        <div>
+                            <label for="radius-cylinder">Radius:</label>
+                            <input type="number" id="radius-cylinder">
+                        </div>
+                        <div>
+                            <label for="height-cylinder">Height:</label>
+                            <input type="number" id="height-cylinder">
+                        </div>
+                        <button onclick="calculateCylinder()">Calculate</button>
+                        <div id="cylinder-result"></div>
+                    </div>
+
+                    <!-- Rectangle Calculator -->
+                    <div class="card">
+                        <h3>Rectangle Calculator</h3>
+                        <div>
+                            <label for="length-rectangle">Length:</label>
+                            <input type="number" id="length-rectangle">
+                        </div>
+                        <div>
+                            <label for="width-rectangle">Width:</label>
+                            <input type="number" id="width-rectangle">
+                        </div>
+                        <button onclick="calculateRectangle()">Calculate</button>
+                        <div id="rectangle-result"></div>
+                    </div>
+
+                    <!-- Square Calculator -->
+                    <div class="card">
+                        <h3>Square Calculator</h3>
+                        <div>
+                            <label for="side-square">Side Length:</label>
+                            <input type="number" id="side-square">
+                        </div>
+                        <button onclick="calculateSquare()">Calculate</button>
+                        <div id="square-result"></div>
+                    </div>
+
+                    <!-- Sphere Calculator -->
+                    <div class="card">
+                        <h3>Sphere Calculator</h3>
+                        <div>
+                            <label for="radius-sphere">Radius:</label>
+                            <input type="number" id="radius-sphere">
+                        </div>
+                        <button onclick="calculateSphere()">Calculate</button>
+                        <div id="sphere-result"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <h1>Math and Algebra Calculators</h1>
+
+                <div class="calculator-grid">
+
+                    <!-- Complex Number Calculator -->
+                    <div class="card">
+                        <h3>Complex Number Calculator</h3>
+                        <div>
+                            <label for="real1">Real Part 1:</label>
+                            <input type="number" id="real1">
+                        </div>
+                        <div>
+                            <label for="imag1">Imaginary Part 1:</label>
+                            <input type="number" id="imag1">
+                        </div>
+                        <div>
+                            <label for="real2">Real Part 2:</label>
+                            <input type="number" id="real2">
+                        </div>
+                        <div>
+                            <label for="imag2">Imaginary Part 2:</label>
+                            <input type="number" id="imag2">
+                        </div>
+                        <button onclick="calculateComplexNumber()">Calculate</button>
+                        <div id="complex-number-result"></div>
+                    </div>
+
+                    <!-- Boolean Algebra Simplifier -->
+                    <div class="card">
+                        <h3>Boolean Algebra Simplifier</h3>
+                        <div>
+                            <label for="boolean-expression">Boolean Expression:</label>
+                            <input type="text" id="boolean-expression">
+                        </div>
+                        <button onclick="simplifyBooleanExpression()">Simplify</button>
+                        <div id="boolean-result"></div>
+                    </div>
+
+                    <!-- Partial Fraction Decomposer -->
+                    <div class="card">
+                        <h3>Partial Fraction Decomposer</h3>
+                        <div>
+                            <label for="rational-function">Rational Function:</label>
+                            <input type="text" id="rational-function">
+                        </div>
+                        <button onclick="decomposePartialFraction()">Decompose</button>
+                        <div id="partial-fraction-result"></div>
+                    </div>
+
+                    <!-- Inequality Calculator -->
+                    <div class="card">
+                        <h3>Inequality Calculator</h3>
+                        <div>
+                            <label for="inequality-expression">Inequality Expression:</label>
+                            <input type="text" id="inequality-expression">
+                        </div>
+                        <button onclick="solveInequality()">Solve</button>
+                        <div id="inequality-result"></div>
+                    </div>
+
+                    <!-- Flow Rate Calculator -->
+                    <div class="card">
+                        <h3>Flow Rate Calculator</h3>
+                        <div>
+                            <label for="pipe-diameter">Pipe Diameter:</label>
+                            <input type="number" id="pipe-diameter">
+                        </div>
+                        <div>
+                            <label for="velocity">Velocity:</label>
+                            <input type="number" id="velocity">
+                        </div>
+                        <button onclick="calculateFlowRate()">Calculate</button>
+                        <div id="flow-rate-result"></div>
+                    </div>
+
+                    <!-- Impulse Calculator -->
+                    <div class="card">
+                        <h3>Impulse Calculator</h3>
+                        <div>
+                            <label for="force">Force:</label>
+                            <input type="number" id="force">
+                        </div>
+                        <div>
+                            <label for="time">Time:</label>
+                            <input type="number" id="time">
+                        </div>
+                        <button onclick="calculateImpulse()">Calculate</button>
+                        <div id="impulse-result"></div>
+                    </div>
+
+                    <!-- Factorization Calculator -->
+                    <div class="card">
+                        <h3>Factorization Calculator</h3>
+                        <div>
+                            <label for="integer">Integer:</label>
+                            <input type="number" id="integer">
+                        </div>
+                        <button onclick="calculateFactorization()">Calculate</button>
+                        <div id="factorization-result"></div>
+                    </div>
+
+                    <!-- Percentage Calculator -->
+                    <div class="card">
+                        <h3>Percentage Calculator</h3>
+                        <div>
+                            <label for="original-value">Original Value:</label>
+                            <input type="number" id="original-value">
+                        </div>
+                        <div>
+                            <label for="percentage-change">Percentage Change:</label>
+                            <input type="number" id="percentage-change">
+                        </div>
+                        <button onclick="calculatePercentage()">Calculate</button>
+                        <div id="percentage-result"></div>
+                    </div>
+
+                    <!-- Exponential Formulas Calculator -->
+                    <div class="card">
+                        <h3>Exponential Formulas Calculator</h3>
+                        <div>
+                            <label for="base">Base:</label>
+                            <input type="number" id="base">
+                        </div>
+                        <div>
+                            <label for="exponent">Exponent:</label>
+                            <input type="number" id="exponent">
+                        </div>
+                        <button onclick="calculateExponential()">Calculate</button>
+                        <div id="exponential-result"></div>
+                    </div>
+
+                    <!-- Cube of a Number Calculator -->
+                    <div class="card">
+                        <h3>Cube of a Number Calculator</h3>
+                        <div>
+                            <label for="cube-number">Number:</label>
+                            <input type="number" id="cube-number">
+                        </div>
+                        <button onclick="calculateCubeNumber()">Calculate</button>
+                        <div id="cube-number-result"></div>
+                    </div>
+
+                    <!-- Cube Root Calculator -->
+                    <div class="card">
+                        <h3>Cube Root Calculator</h3>
+                        <div>
+                            <label for="cube-root-number">Number:</label>
+                            <input type="number" id="cube-root-number">
+                        </div>
+                        <button onclick="calculateCubeRoot()">Calculate</button>
+                        <div id="cube-root-result"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- About Section -->
+            <section id="about">
+                <h3>About</h3>
+                <p>Our All in One Calculator is designed to provide a comprehensive solution for various types of calculations, from financial and health calculators to geometry and algebra calculators. Our goal is to make your life easier by offering a versatile and user-friendly tool that you can rely on for accurate results.</p>
+            </section>
+
+            <!-- Contact Us Section -->
+            <section id="contact">
+                <h3>Contact Us</h3>
+                <p>If you have any questions, feedback, or suggestions, please feel free to contact us at:</p>
+                <ul>
+                    <li>Email: info@allinonecalculator.com</li>
+                    <li>Phone: 6556987854</li>
+                    <li>Address: 88 new pralag apartment, new delhi.</li>
+                </ul>
+            </section>
+            <!-- Footer Section -->
+            <footer>
+                <p>&copy; 2025 All in One Calculator. All rights reserved.</p>
+            </footer>
+
+            <script src="/js/script.js"></script>
+</body>
+</html>
